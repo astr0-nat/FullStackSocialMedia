@@ -8,7 +8,9 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import { register} from "./controllers/auth.js"
+import authRoutes from "./routes/auth.js"; // route folder where we have path and routes for auths
+import userRoutes from "./routes/users.js";
+import { register } from "./controllers/auth.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -38,9 +40,15 @@ const upload = multer({ storage });
 /* ROUTES WITH FILES */
 
 /* handls http post request at that url, middleware is we upload profile pic, then register is
-the "controller" - the logic of the endpoint */
-app.post("auth/register", upload.single("picture"), register)
+the "controller" - the logic of the endpoint 
+not in the routes dir bc we need access to the upload variable*/
+app.post("auth/register", upload.single("picture"), register);
 
+/* ROUTES */
+/* in development i write the app.use for some route, then go make the routes in their seperate folder */
+app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
 /** MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
 mongoose
@@ -50,6 +58,5 @@ mongoose
   })
   .then(() => {
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-
   })
   .catch((error) => console.log(`${error} did not connect`));

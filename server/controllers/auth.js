@@ -42,3 +42,23 @@ export const register = async (req, res) => {
 
     }
 }
+
+/* LOGGING IN */
+/* production will probably use some third party authentication software or whatever */
+/* when the user logs in they receive a token, and they can use that to authenticate */
+export const login = async (req,res) => {
+    try{
+        const { email, password } = req.body;
+        const user = await User.findOne( { email: email});
+        if (!user) return res.status(400).json({msg: "User does not exist. "});
+
+        const isMatch = await bcrypt.compare(password, user.password); //uses same salt to compare
+        if (!isMatch) return res.status(400).json({msg: "Invalid credentials. "})
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        delete user.password; // make sure it doesnt get sent back to the front end
+        res.status(200).json({ token, user});
+    } catch(err) {
+
+    }
+}
