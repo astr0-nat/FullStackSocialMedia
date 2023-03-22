@@ -10,7 +10,10 @@ import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js"; // route folder where we have path and routes for auths
 import userRoutes from "./routes/users.js";
+import postRoutes from "./routes/posts.js";
 import { register } from "./controllers/auth.js";
+import { verifyToken } from "./middleware/auth.js";
+import { createPost } from "./controllers/posts.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -42,7 +45,14 @@ const upload = multer({ storage });
 /* handls http post request at that url, middleware is we upload profile pic, then register is
 the "controller" - the logic of the endpoint 
 not in the routes dir bc we need access to the upload variable*/
+/* the "picture" in upload.single("picure") . the front end
+ sends the picture image, so this will grab the "picture" 
+ property. so if the picture is saved under "picture" in 
+ the http call, then the image will be grabbed. we can 
+ name it whatever but it will have to be named 
+ appropriately in the front end. */
 app.post("auth/register", upload.single("picture"), register);
+app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 /* ROUTES */
 /* in development i write the app.use for some route, then go make the routes in their seperate folder */
