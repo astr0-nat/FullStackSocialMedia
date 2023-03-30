@@ -13,7 +13,7 @@ import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import { register } from "./controllers/auth.js";
 import { verifyToken } from "./middleware/auth.js";
-import { createPost } from "./controllers/posts.js";
+import { createPost } from "./controllers/posts.js"; // a controller we are going to make not
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -50,7 +50,7 @@ not in the routes dir bc we need access to the upload variable*/
  property. so if the picture is saved under "picture" in 
  the http call, then the image will be grabbed. we can 
  name it whatever but it will have to be named 
- appropriately in the front end. */
+ appropriately in the front end."picture" is a named property */
 app.post("auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
