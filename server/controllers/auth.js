@@ -1,4 +1,4 @@
-import bcrypt from "bycryp"
+import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken" // for authrorization, cookies kinda. confirm logged in
 import User from "../models/User.js"
 

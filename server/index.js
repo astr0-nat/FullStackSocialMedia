@@ -13,7 +13,7 @@ import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import { register } from "./controllers/auth.js";
 import { verifyToken } from "./middleware/auth.js";
-import { createPost } from "./controllers/posts.js"; // a controller we are going to make not
+import { createPost } from "./controllers/post.js"; // a controller we are going to make not
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);

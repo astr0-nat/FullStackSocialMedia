@@ -39,16 +39,23 @@ export const createPost = async (req, res) => {
 /* READ */
 
 export const getFeedPosts = async (req, res) => {
-  try {
-    /* so here we are using req.params instead, as the userId will be a property in the object
-    provided by node that is maps named route "parameters" to properties like "/:userId"  */
-    const { userId } = req.params;
-    const post = await Post.find({ userId });
-    res.status(200).json(post);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
-  }
-};
+    try {
+      const post = await Post.find();
+      res.status(200).json(post);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+    }
+  };
+
+export const getUserPosts = async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const post = await Post.find({ userId });
+      res.status(200).json(post);
+    } catch (err) {
+      res.status(404).json({ message: err.message });
+    }
+  };
 
 /* UPDATE */
 // a lot of these routes require passing in updated values to the frontEnd so they can update the frontEnd feed
