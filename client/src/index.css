@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+
+/* These are CSS selectors, the rules that follow them will be applied to those elements 
+The # is used to target elements by their id. Targeting these without any definition helps to prevent
+libraries from potentially assigning css to these elements by default */
 
 html,
 body,
 #root,
-.app {
+/* the . is used to target classes, so this targets elements with the class = app */
+.app { 
   height: 100%;
   width: 100%;
   font-family: "Rubik", sans-serif; 
